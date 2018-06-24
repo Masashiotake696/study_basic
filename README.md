@@ -8,3 +8,4 @@
 
 ## search
 - binary search
+- index search
