@@ -50,103 +50,35 @@ for($i=0; $i < $length - 1; $i++) {
     }
 }
 
-// 探索用配列を用意
-$search_data = $data;
-
 // 探索する文字列を入力してもらう
 echo '検索したい名前(ひらがな)を入力してください: ';
 $search_name = trim(fgets(STDIN));
 
-// ループ回数を取得
-$loop = $length / 2;
+// 二分探索の初期値を格納
+$loop = $length / 2; // ループ回数を取得
+$now = (int)floor(($length - 1) / 2); // 探索位置
+$min = 0; // 探索の最小位置
+$max = $length - 1; // 探索の最大位置
+$result; // 探索結果
 
-// 探索が終了していない位置を記憶する変数
-$index = $length - 1;
-
-// 結果を格納する配列
-$result = [];
-
+// 二分探索を実行
 for($i = 0; $i < $loop; $i++) {
-    // 中間位置を取得($indexが偶数か奇数かで場合分け)
-    if($index % 2 === 0) {
-        $index = $index / 2;
+    if($data[$now][2] === $search_name) { // 探索位置の値が入力値と一致していたらその値を結果変数に格納してbreak
+        $result = $data[$now];
+        break;
+    } else if($min === $max) { // 探索終了時点で見つからなかった場合は見つからなかったことを結果変数に格納してbreak
+        $result = 'そんな名前は知りません';
+        break;
     } else {
-        $index = (int)(floor($index / 2) + 1);
-    }
-
-    // 中間位置の値と比較
-    if($search_data[$index][2] > $search_name) {
-        // 参照している値が添字1の場合は添字0の値を結果に入れてループを抜ける
-        if($index === 1) {
-            // 入力された名前が存在するか判定
-            if($search_data[0][2] === $search_name){
-                $result = $search_data[0];
-                break;
-            } else {
-                echo "そんな名前は知りません\n";
-                exit;
-            }
-        }
-        // 検索される配列を定義し直す
-        $buf = $search_data;
-        $search_data = [];
-        for($j = 0; $j < $index; $j++){
-            $search_data[] = $buf[$j];
-        }
-        // 検索される配列の長さが1の場合は、添字0の値を結果に入れてループを抜ける
-        if(count($search_data) === 1) {
-            // 入力された名前が存在するか判定
-            if($search_data[0][2] === $search_name){
-                $result = $search_data[0];
-                break;
-            } else {
-                echo "そんな名前は知りません\n";
-                exit;
-            }
-        }
-        // 探索が終了していない位置を記憶
-        $index = count($search_data) - 1;
-    } else if($search_data[$index][2] < $search_name) {
-        // 参照している値が添字1の場合は添字2の値を結果に入れてループを抜ける
-        if($index === 1) {
-            // 入力された名前が存在するか判定
-            if($search_data[2][2] === $search_name){
-                $result = $search_data[2];
-                break;
-            } else {
-                echo "そんな名前は知りません\n";
-                exit;
-            }
-        }
-        // 検索される配列を定義し直す
-        $buf = $search_data;
-        $search_data = [];
-        for($j = $index + 1; $j < count($buf); $j++) {
-            $search_data[] = $buf[$j];
-        }
-        // 検索される配列の長さが1の場合は、添字0の値を結果に入れてループを抜ける
-        if(count($search_data) === 1) {
-            // 入力された名前が存在するか判定
-            if($search_data[0][2] === $search_name) {
-                $result = $search_data[0];
-                break;
-            } else {
-                echo "そんな名前は知りません\n";
-                exit;
-            }
-        }
-        // 探索が終了していない位置を記憶
-        $index = count($search_data) - 1;
-    } else {
-        // 入力された名前が存在するか判定
-        if($search_data[$index][2] === $search_name){
-            $result = $search_data[$index];
-            break;
+        // 探索位置の値と入力値の大小関係を比較
+        if($data[$now][2] > $search_name) {
+            $max = $now - 1;
         } else {
-            echo "そんな名前は知りません\n";
-            exit;
+            $min = $now + 1;
         }
+        // 次の探索位置を決定
+        $now = (int)floor(($min + $max) / 2);
     }
 }
-
+// 結果を出力
 var_dump($result);
