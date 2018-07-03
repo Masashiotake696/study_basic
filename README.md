@@ -9,3 +9,8 @@
 ## search
 - binary search
 - index search
+
+## encryption
+- rot1
+- rot13
+- OPI(self made algorithm)
