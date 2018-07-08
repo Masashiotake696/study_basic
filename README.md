@@ -1,16 +1,19 @@
 # study_basic
 
-## sort
-- bubble sort
-- heap sort
-- merge sort
-- quick sort
+## Sort
+- Bubble Sort
+- Heap Sort
+- Merge Sort
+- Quick Sort
 
-## search
-- binary search
-- index search
+## Search
+- Binary Search
+- Index Search(self made algorithm)
 
-## encryption
-- rot1
-- rot13
+## Encryption
+- Rot1
+- Rot13
 - OPI(self made algorithm)
+
+## Recursive Function
+- Tower of Hanoi
