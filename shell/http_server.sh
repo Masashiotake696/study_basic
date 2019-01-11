@@ -8,7 +8,7 @@ do
 
   file=`echo $line | awk '{print $2;}' | tr -d '/'`
   if [ -r $file ]; then
-    cat $file
+    cat ./index.html
   else
     echo "No such file: " $file 
   fi
